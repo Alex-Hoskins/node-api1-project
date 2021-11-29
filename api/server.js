@@ -43,6 +43,18 @@ server.get('/api/users', (req, res) =>{
 })
 
 // Get user by id
+server.get('/api/users/:id', async (req, res)=>{
+    try{
+        const user= await Users.findById(req.params.id);
+        if(!user){
+            res.status(404).json({ message: "The user with the specified ID does not exist" })
+        }else{
+        res.status(201).json(user);
+        }
+    } catch(err){
+        res.status(500).json({ message: "The user information could not be retrieved" })
+    }
+})
 // Delete a user by id
 // Put user by id
 
