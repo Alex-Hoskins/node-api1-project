@@ -15,6 +15,21 @@ server.get('/api/hello',(req, res) =>{
 })
 
 // Post a user
+server.post('/api/users', async (req, res) => {
+    try{
+        if(!req.body.name | !req.body.bio){
+            res.status(400).json({ message: "Please provide name and bio for the user" })
+        }else{
+        const newUser= await Users.insert(req.body)
+        res.status(201).json(newUser);
+        }
+    } catch(err){
+        res.status(500).json({ 
+            message: "There was an error while saving the user to the database"
+         })
+    }
+})
+
 // Get all users
 server.get('/api/users', (req, res) =>{
     Users.find()
